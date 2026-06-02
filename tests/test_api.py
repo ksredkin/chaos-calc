@@ -8,6 +8,7 @@ os.environ["DB_NAME"] = "test_db"
 
 os.environ["REDIS_HOST"] = "localhost"
 os.environ["REDIS_PORT"] = "6379"
+os.environ["REDIS_NOT_NEEDED"] = "True"
 
 from typing import AsyncGenerator
 
