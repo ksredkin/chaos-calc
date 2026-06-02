@@ -1,0 +1,68 @@
+services:
+  calc-postgres:
+    container_name: calc-postgres
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+        - calc-net
+
+  calc-redis:
+    image: redis:7
+    container_name: calc-redis
+    restart: unless-stopped
+    networks:
+      - calc-net
+
+  calc-api:
+    container_name: calc-api
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      API_HOST: ${API_HOST}
+      API_PORT: ${API_PORT}
+      DB_HOST: calc-postgres
+      DB_PORT: ${DB_PORT} 
+      DB_USER: ${DB_USER} 
+      DB_PASSWORD: ${DB_PASSWORD} 
+      DB_NAME: ${DB_NAME} 
+      REDIS_HOST: ${REDIS_HOST} 
+      REDIS_PORT: ${REDIS_PORT} 
+    depends_on:
+      - calc-postgres
+      - calc-redis
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    networks:
+      - calc-net
+
+  calc-migrations:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      DB_HOST: calc-postgres
+      DB_PORT: ${DB_PORT} 
+      DB_USER: ${DB_USER} 
+      DB_PASSWORD: ${DB_PASSWORD} 
+      DB_NAME: ${DB_NAME} 
+    command: poetry run alembic upgrade head
+    depends_on:
+      - calc-postgres
+    networks:
+      - calc-net
+
+networks:
+  calc-net:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    name: postgres-data
