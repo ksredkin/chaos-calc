@@ -10,6 +10,7 @@ os.environ["REDIS_HOST"] = "localhost"
 os.environ["REDIS_PORT"] = "6379"
 os.environ["REDIS_NOT_NEEDED"] = "True"
 
+from importlib import reload
 from typing import AsyncGenerator
 
 import pytest
@@ -29,7 +30,15 @@ async def test_api(
     mocker: MockerFixture,
     redis: FakeRedis,
 ) -> None:
-    mocker.patch("src.api.services.cache.r", redis)
+    mocker.patch("src.api.redis.client.r", redis)
+
+    import src.api.services.cache
+
+    reload(src.api.services.cache)
+
+    import src.api.__main__
+
+    reload(src.api.__main__)
 
     async def override_get_db() -> AsyncGenerator[AsyncSession, None]:
         async with sessionmaker() as session:
