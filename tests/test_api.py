@@ -12,7 +12,9 @@ os.environ["REDIS_PORT"] = "6379"
 from typing import AsyncGenerator
 
 import pytest
+from fakeredis.aioredis import FakeRedis
 from fastapi.testclient import TestClient
+from pytest_mock import MockerFixture
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from src.api.__main__ import app
@@ -21,7 +23,13 @@ from src.api.repositories.calculator import CalculatorRepository
 
 
 @pytest.mark.asyncio
-async def test_api(sessionmaker: async_sessionmaker[AsyncSession]) -> None:
+async def test_api(
+    sessionmaker: async_sessionmaker[AsyncSession],
+    mocker: MockerFixture,
+    redis: FakeRedis,
+) -> None:
+    mocker.patch("src.api.services.cache.r", redis)
+
     async def override_get_db() -> AsyncGenerator[AsyncSession, None]:
         async with sessionmaker() as session:
             yield session
