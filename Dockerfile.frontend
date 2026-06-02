@@ -1,0 +1,8 @@
+FROM node:22-alpine
+
+COPY ./src/frontend /app/src/frontend
+WORKDIR /app/src/frontend
+
+RUN npm install
+
+CMD ["npm", "run", "dev"]

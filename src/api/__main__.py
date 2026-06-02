@@ -2,6 +2,7 @@ import os
 
 import uvicorn
 from fastapi import Depends, FastAPI, Query
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.api.database.connection import get_db
@@ -17,6 +18,14 @@ app = FastAPI(
     title="Chaos Calculator API",
     description="API для обучения и получения результатов математических выражений",
     version="1.0.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 

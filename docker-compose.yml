@@ -43,6 +43,22 @@ services:
     networks:
       - calc-net
 
+  calc-frontend:
+    container_name: calc-frontend
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    environment:
+      API_HOST: calc-api
+      API_PORT: ${API_PORT} 
+    depends_on:
+      - calc-api
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    networks:
+      - calc-net
+
   calc-migrations:
     build:
       context: .
