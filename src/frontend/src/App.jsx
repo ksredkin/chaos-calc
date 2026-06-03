@@ -104,45 +104,91 @@ function App() {
   return (
     <div className="app-background">
       <h1>Chaos Calculator</h1>
-      <div className="calculator-card">
-        <div>
-          <button className={mode === 1 ? "mode-btn" : "active-mode-btn"} onClick={() => ChangeModeTo(0)}>Счет</button>
-          <button className={mode === 0 ? "mode-btn" : "active-mode-btn"} onClick={() => ChangeModeTo(1)}>Обучение</button>
-        </div>
-        <input 
-          type="text" 
-          value={expression} 
-          onChange={(e) => SmartSetExpression(e.target.value)}
-          onKeyDown={handleKeyDown} 
-          placeholder="Выражение"
-          className="output"
-        />
+      <div className="calculator-card-back">
+        <div className="calculator-card">
+          <div className="mode-buttons">
+            <div className={mode === 0 ? "active-mode-btn-back" : "mode-btn-back"}>
+              <button className={mode === 1 ? "mode-btn" : "active-mode-btn"} onClick={() => ChangeModeTo(0)}>Счет</button>
+            </div>
+            <div className={mode === 1 ? "active-mode-btn-back" : "mode-btn-back"}>
+              <button className={mode === 0 ? "mode-btn" : "active-mode-btn"} onClick={() => ChangeModeTo(1)}>Обучение</button>
+            </div>
+          </div>
+          <div className="output-back">
+            <input 
+            type="text" 
+            value={expression} 
+            onChange={(e) => SmartSetExpression(e.target.value)}
+            onKeyDown={handleKeyDown} 
+            placeholder="Выражение"
+            className="output"
+          />  
+          </div>
 
-        <div className="buttons-grid">
-          <button className="clear-btn" onClick={ClearExpression}>C</button>
-          <button className="bracket-btn" onClick={() => AddToExpression("(")}>(</button>
-          <button className="bracket-btn" onClick={() => AddToExpression(")")}>)</button>
-          <button className="ac-btn" onClick={RemoveOneFromExpression}>⌫</button>
-          <button className="number-btn" onClick={() => AddToExpression("7")}>7</button>
-          <button className="number-btn" onClick={() => AddToExpression("8")}>8</button>
-          <button className="number-btn" onClick={() => AddToExpression("9")}>9</button>
-          <button className="operation-btn" onClick={() => AddToExpression("/")}>/</button>
-          <button className="number-btn" onClick={() => AddToExpression("4")}>4</button>
-          <button className="number-btn" onClick={() => AddToExpression("5")}>5</button>
-          <button className="number-btn" onClick={() => AddToExpression("6")}>6</button>
-          <button className="operation-btn" onClick={() => AddToExpression("*")}>*</button>
-          <button className="number-btn" onClick={() => AddToExpression("1")}>1</button>
-          <button className="number-btn" onClick={() => AddToExpression("2")}>2</button>
-          <button className="number-btn" onClick={() => AddToExpression("3")}>3</button>
-          <button className="operation-btn" onClick={() => AddToExpression("-")}>-</button>
-          <button className="dot-btn" onClick={() => AddToExpression(".")}>.</button>
-          <button className="number-btn" onClick={() => AddToExpression("0")}>0</button>
-          {mode == 0 && <button className="equal-btn" onClick={handleCalculate}>=</button>}
-          {mode == 1 && <button className="equal-btn" onClick={() => AddToExpression("=")}>=</button>}
-          <button className="operation-btn" onClick={() => AddToExpression("+")}>+</button>
-        </div>
+          <div className="buttons-grid">
+            <div className="clear-btn-back">
+              <button className="clear-btn" onClick={ClearExpression}>C</button>
+            </div>
+            <div className="bracket-btn-back">
+              <button className="bracket-btn" onClick={() => AddToExpression("(")}>(</button>
+            </div>
+            <div className="bracket-btn-back">
+              <button className="bracket-btn" onClick={() => AddToExpression(")")}>)</button>
+            </div>
+            <div className="ac-btn-back">
+              <button className="ac-btn" onClick={RemoveOneFromExpression}>⌫</button>
+            </div>
+            <div className="number-btn-back">
+              <button className="number-btn" onClick={() => AddToExpression("7")}>7</button>
+            </div>
+           <div className="number-btn-back">
+              <button className="number-btn" onClick={() => AddToExpression("8")}>8</button>
+            </div>
+            <div className="number-btn-back">
+              <button className="number-btn" onClick={() => AddToExpression("9")}>9</button>
+            </div>
+            <div className="operation-btn-back">
+              <button className="operation-btn" onClick={() => AddToExpression("/")}>/</button>
+            </div>
+            <div className="number-btn-back">
+              <button className="number-btn" onClick={() => AddToExpression("4")}>4</button>
+            </div>
+           <div className="number-btn-back">
+              <button className="number-btn" onClick={() => AddToExpression("5")}>5</button>
+            </div>
+            <div className="number-btn-back">
+              <button className="number-btn" onClick={() => AddToExpression("6")}>6</button>
+            </div>
+            <div className="operation-btn-back">
+              <button className="operation-btn" onClick={() => AddToExpression("*")}>*</button>
+            </div>
+            <div className="number-btn-back">
+              <button className="number-btn" onClick={() => AddToExpression("1")}>1</button>
+            </div>
+           <div className="number-btn-back">
+              <button className="number-btn" onClick={() => AddToExpression("2")}>2</button>
+            </div>
+            <div className="number-btn-back">
+              <button className="number-btn" onClick={() => AddToExpression("3")}>3</button>
+            </div>
+            <div className="operation-btn-back">
+              <button className="operation-btn" onClick={() => AddToExpression("-")}>-</button>
+            </div>
+            <div className="dot-btn-back">
+              <button className="dot-btn" onClick={() => AddToExpression(".")}>.</button>
+            </div>
+            <div className="number-btn-back">
+              <button className="number-btn" onClick={() => AddToExpression("0")}>0</button>
+            </div>
+            {mode == 0 && <div className="equal-btn-back"><button className="equal-btn" onClick={handleCalculate}>=</button></div>}
+            {mode == 1 && <div className="equal-btn-back"><button className="equal-btn" onClick={() => AddToExpression("=")}>=</button></div>}
+            <div className="operation-btn-back">
+              <button className="operation-btn" onClick={() => AddToExpression("+")}>+</button>
+            </div>
+          </div>
 
-        {mode == 1 && <button className="teach-btn" onClick={Teach}>Обучить</button>}
+          {mode == 1 && <div className="teach-btn-back"><button className="teach-btn" onClick={Teach}>Обучить</button></div>}
+        </div>
       </div>
     </div>
   )
