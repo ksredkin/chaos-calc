@@ -39,7 +39,6 @@ async def calculate(
         ...,
         min_length=1,
         max_length=50,
-        pattern=r"^[0-9+\-*/().]+$",
         description="Математическое выражение",
     ),
     session: AsyncSession = Depends(get_db),
